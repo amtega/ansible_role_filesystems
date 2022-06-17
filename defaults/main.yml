@@ -1,0 +1,29 @@
+---
+# Role default lower priority variables
+
+# List of dicts with filesystems to setup. The dicts have the same attributes
+# that the ones expected by the ansible filesystem module. Example:
+#
+# filesystems:
+#   - dev: /dev/sdb1
+#     force: no
+#     fstype: xfs
+#     opts: []
+#     resizefs: no
+
+filesystems: []
+
+# Dicitionary with the defaults options to use if no other ones are specified in
+# the `filesystems` variable. The members of the dict are the same attributes
+# that the ones expected by the ansible parted module
+
+filesystems_defaults:
+  fstype: xfs
+  force: no
+
+# Indicate `filesystems` must be loaded also from host variables. Any host
+# variable that begins with "filesystems_*" and contains the necessary
+# attributes will be loaded as an item to manage by the role. The variables must
+#  follow the structure detailed before for `filesystems`
+
+filesystems_load_from_hostvars: no

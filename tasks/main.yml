@@ -1,0 +1,35 @@
+---
+# Role tasks
+
+- name: Setup filesystems
+  filesystem:
+    dev: >-
+      {{ filesystem.dev
+         | default(filesystems_defaults.dev) }}
+    force: >-
+      {{ filesystem.force
+         | default(filesystems_defaults.force)
+         | default(omit) }}
+    fstype: >-
+      {{ filesystem.fstype
+         | default(filesystems_defaults.fstype)
+         | default(omit) }}
+    opts: >-
+      {{ filesystem.opts
+         | default(filesystems_defaults.opts)
+         | default(omit) }}
+    resizefs: >-
+      {{ filesystem.resizefs
+         | default(filesystems_defaults.resizefs)
+         | default(omit) }}
+  loop: "{{ filesystems_to_manage }}"
+  loop_control:
+    loop_var: filesystem
+    label: "{{ filesystem.dev }} / {{ filesystem.fstype }}"
+  vars:
+    filesystems_to_manage: >-
+      {{ filesystems
+         + ((filesystems_load_from_hostvars | bool)
+            | ternary(filesystems_hostvars | default([]) | flatten, [])) }}
+  tags:
+    - role::filesystem

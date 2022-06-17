@@ -1,0 +1,8 @@
+---
+
+roles:
+  - amtega.parted
+  - amtega.lvm_vg
+  - amtega.lvm_lv
+
+collections: []

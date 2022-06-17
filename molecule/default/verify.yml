@@ -1,0 +1,18 @@
+---
+
+- name: Verify
+  hosts: molecule_hosts
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Gather filesystem info
+      ansible.builtin.command: blkid /dev/mapper/vgtesting-lvtest
+      changed_when: no
+      args:
+        warn: no
+      register: filesystem_info_result
+
+    - name: Assert filesystem is created with fstype
+      ansible.builtin.assert:
+        that:
+          - filesystem_info_result.stdout is search("xfs")
