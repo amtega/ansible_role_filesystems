@@ -1,5 +1,4 @@
 ---
-# Role tasks
 
 - name: Setup filesystems
   filesystem:
